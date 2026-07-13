@@ -9,10 +9,10 @@
 #include "esp_timer.h"
 
 #include "board_pins.h"
-#include "epd_gdeq0426t82.h"
+#include "epd_ssd1677.h"
 #include "epd_text.h"
 
-static const char *TAG = "epd_gdeq0426t82";
+static const char *TAG = "epd_ssd1677";
 
 #define EPD_SPI_HOST            SPI2_HOST
 #define EPD_SPI_FREQ_HZ         (8 * 1000 * 1000)
@@ -725,7 +725,7 @@ static esp_err_t epd_draw_paged_4g(void (*draw_page)(uint8_t *buf, int page, int
     return ESP_OK;
 }
 
-esp_err_t epd_gdeq0426t82_init(void)
+esp_err_t epd_ssd1677_init(void)
 {
     ESP_LOGI(TAG, "Init SPI/GPIO (same as display.init + selectSPI)");
 
@@ -785,7 +785,7 @@ esp_err_t epd_gdeq0426t82_init(void)
     return ESP_OK;
 }
 
-esp_err_t epd_gdeq0426t82_clear(uint8_t value)
+esp_err_t epd_ssd1677_clear(uint8_t value)
 {
     ESP_LOGI(TAG, "clearScreen(0x%02x)", value);
 
@@ -802,18 +802,18 @@ esp_err_t epd_gdeq0426t82_clear(uint8_t value)
     return ESP_OK;
 }
 
-esp_err_t epd_gdeq0426t82_purge_ghost(void)
+esp_err_t epd_ssd1677_purge_ghost(void)
 {
     ESP_LOGI(TAG, "purge partial ghost (B/W solid black -> white, full screen)");
 
-    ESP_RETURN_ON_ERROR(epd_gdeq0426t82_show_solid_bw(0x00), TAG, "purge black failed");
-    ESP_RETURN_ON_ERROR(epd_gdeq0426t82_show_solid_bw(0xFF), TAG, "purge white failed");
+    ESP_RETURN_ON_ERROR(epd_ssd1677_show_solid_bw(0x00), TAG, "purge black failed");
+    ESP_RETURN_ON_ERROR(epd_ssd1677_show_solid_bw(0xFF), TAG, "purge white failed");
 
     s_init_4g_done = false;
     return ESP_OK;
 }
 
-esp_err_t epd_gdeq0426t82_clear_4g(uint8_t brb)
+esp_err_t epd_ssd1677_clear_4g(uint8_t brb)
 {
     const uint8_t pat = (uint8_t)((brb & 0x03) * 0x55);
 
@@ -834,26 +834,26 @@ esp_err_t epd_gdeq0426t82_clear_4g(uint8_t brb)
     return ESP_OK;
 }
 
-esp_err_t epd_gdeq0426t82_fill(uint8_t brb)
+esp_err_t epd_ssd1677_fill(uint8_t brb)
 {
     ESP_LOGI(TAG, "fill grey level %u (4G)", brb);
     s_solid_brb = brb & 0x03;
     return epd_draw_paged_4g(epd_draw_solid_page);
 }
 
-esp_err_t epd_gdeq0426t82_show_checkerboard(void)
+esp_err_t epd_ssd1677_show_checkerboard(void)
 {
     ESP_LOGI(TAG, "checkerboard pattern");
     return epd_draw_paged_4g(epd_draw_checkerboard_page);
 }
 
-esp_err_t epd_gdeq0426t82_show_stripes(void)
+esp_err_t epd_ssd1677_show_stripes(void)
 {
     ESP_LOGI(TAG, "vertical stripes");
     return epd_draw_paged_4g(epd_draw_stripes_page);
 }
 
-esp_err_t epd_gdeq0426t82_show_image_4g(const uint8_t *bitmap)
+esp_err_t epd_ssd1677_show_image_4g(const uint8_t *bitmap)
 {
     if (!bitmap) {
         return ESP_ERR_INVALID_ARG;
@@ -870,7 +870,7 @@ esp_err_t epd_gdeq0426t82_show_image_4g(const uint8_t *bitmap)
     return ESP_OK;
 }
 
-esp_err_t epd_gdeq0426t82_show_image_bw(const uint8_t *bitmap)
+esp_err_t epd_ssd1677_show_image_bw(const uint8_t *bitmap)
 {
     if (!bitmap) {
         return ESP_ERR_INVALID_ARG;
@@ -889,7 +889,7 @@ esp_err_t epd_gdeq0426t82_show_image_bw(const uint8_t *bitmap)
     return ESP_OK;
 }
 
-esp_err_t epd_gdeq0426t82_show_solid_bw(uint8_t value)
+esp_err_t epd_ssd1677_show_solid_bw(uint8_t value)
 {
     uint8_t *buf = malloc(EPD_IMAGE_BW_BYTES);
     if (!buf) {
@@ -897,14 +897,14 @@ esp_err_t epd_gdeq0426t82_show_solid_bw(uint8_t value)
     }
 
     memset(buf, value, EPD_IMAGE_BW_BYTES);
-    esp_err_t err = epd_gdeq0426t82_show_image_bw(buf);
+    esp_err_t err = epd_ssd1677_show_image_bw(buf);
     free(buf);
     return err;
 }
 
 static esp_err_t epd_show_framebuffer_4g(uint8_t *fb)
 {
-    esp_err_t err = epd_gdeq0426t82_show_image_4g(fb);
+    esp_err_t err = epd_ssd1677_show_image_4g(fb);
     free(fb);
     return err;
 }
@@ -956,7 +956,7 @@ static uint8_t epd_dither_grey4_bayer(int16_t x, int16_t y, float target)
     return (uint8_t)base;
 }
 
-esp_err_t epd_gdeq0426t82_show_grey4_levels(void)
+esp_err_t epd_ssd1677_show_grey4_levels(void)
 {
     const int bands = 4;
     const int band_h = EPD_NATIVE_HEIGHT / bands;
@@ -977,7 +977,7 @@ esp_err_t epd_gdeq0426t82_show_grey4_levels(void)
     return epd_show_framebuffer_4g(fb);
 }
 
-esp_err_t epd_gdeq0426t82_show_grey16_stripes(void)
+esp_err_t epd_ssd1677_show_grey16_stripes(void)
 {
     const int stripes = 16;
     const int stripe_w = EPD_NATIVE_WIDTH / stripes;
@@ -1006,7 +1006,7 @@ esp_err_t epd_gdeq0426t82_show_grey16_stripes(void)
     return epd_show_framebuffer_4g(fb);
 }
 
-esp_err_t epd_gdeq0426t82_show_text_4g(const char *text, int16_t x, int16_t y, uint8_t grey, uint8_t scale)
+esp_err_t epd_ssd1677_show_text_4g(const char *text, int16_t x, int16_t y, uint8_t grey, uint8_t scale)
 {
     if (!text) {
         return ESP_ERR_INVALID_ARG;
@@ -1025,7 +1025,7 @@ esp_err_t epd_gdeq0426t82_show_text_4g(const char *text, int16_t x, int16_t y, u
     return epd_show_framebuffer_4g(fb);
 }
 
-esp_err_t epd_gdeq0426t82_show_image_with_text_4g(const uint8_t *bg, const char *text,
+esp_err_t epd_ssd1677_show_image_with_text_4g(const uint8_t *bg, const char *text,
                                                   int16_t x, int16_t y, uint8_t grey, uint8_t scale)
 {
     if (!bg || !text) {
@@ -1045,28 +1045,28 @@ esp_err_t epd_gdeq0426t82_show_image_with_text_4g(const uint8_t *bg, const char 
     return epd_show_framebuffer_4g(fb);
 }
 
-esp_err_t epd_gdeq0426t82_show_text_partial(const char *text, int16_t x, int16_t y, uint8_t scale)
+esp_err_t epd_ssd1677_show_text_partial(const char *text, int16_t x, int16_t y, uint8_t scale)
 {
     return epd_text_show_partial(text, x, y, scale);
 }
 
-esp_err_t epd_gdeq0426t82_show_text_partial_term(const char *text, int16_t x, int16_t y, uint8_t scale)
+esp_err_t epd_ssd1677_show_text_partial_term(const char *text, int16_t x, int16_t y, uint8_t scale)
 {
     return epd_text_show_partial_term(text, x, y, scale);
 }
 
-esp_err_t epd_gdeq0426t82_show_char_partial_term(char c, int16_t x, int16_t y, uint8_t scale)
+esp_err_t epd_ssd1677_show_char_partial_term(char c, int16_t x, int16_t y, uint8_t scale)
 {
     return epd_text_show_char_partial_term(c, x, y, scale);
 }
 
-esp_err_t epd_gdeq0426t82_refresh_area(int16_t x, int16_t y, int16_t w, int16_t h)
+esp_err_t epd_ssd1677_refresh_area(int16_t x, int16_t y, int16_t w, int16_t h)
 {
     epd_refresh_area(x, y, w, h);
     return ESP_OK;
 }
 
-esp_err_t epd_gdeq0426t82_write_bw_fill(int16_t x, int16_t y, int16_t w, int16_t h, uint8_t value)
+esp_err_t epd_ssd1677_write_bw_fill(int16_t x, int16_t y, int16_t w, int16_t h, uint8_t value)
 {
     if (s_refresh_mode == EPD_REFRESH_GREY) {
         epd_write_bw_fill(0x26, x, y, w, h, value);
@@ -1075,13 +1075,13 @@ esp_err_t epd_gdeq0426t82_write_bw_fill(int16_t x, int16_t y, int16_t w, int16_t
     return ESP_OK;
 }
 
-esp_err_t epd_gdeq0426t82_write_bw_fill_again(int16_t x, int16_t y, int16_t w, int16_t h, uint8_t value)
+esp_err_t epd_ssd1677_write_bw_fill_again(int16_t x, int16_t y, int16_t w, int16_t h, uint8_t value)
 {
     epd_partial_sync_fill(x, y, w, h, value);
     return ESP_OK;
 }
 
-esp_err_t epd_gdeq0426t82_write_image_bw(const uint8_t *bitmap, int16_t x, int16_t y, int16_t w, int16_t h)
+esp_err_t epd_ssd1677_write_image_bw(const uint8_t *bitmap, int16_t x, int16_t y, int16_t w, int16_t h)
 {
     if (!bitmap) {
         return ESP_ERR_INVALID_ARG;
@@ -1093,7 +1093,7 @@ esp_err_t epd_gdeq0426t82_write_image_bw(const uint8_t *bitmap, int16_t x, int16
     return ESP_OK;
 }
 
-esp_err_t epd_gdeq0426t82_write_image_bw_again(const uint8_t *bitmap, int16_t x, int16_t y, int16_t w, int16_t h)
+esp_err_t epd_ssd1677_write_image_bw_again(const uint8_t *bitmap, int16_t x, int16_t y, int16_t w, int16_t h)
 {
     if (!bitmap) {
         return ESP_ERR_INVALID_ARG;
@@ -1103,7 +1103,7 @@ esp_err_t epd_gdeq0426t82_write_image_bw_again(const uint8_t *bitmap, int16_t x,
     return ESP_OK;
 }
 
-esp_err_t epd_gdeq0426t82_show_partial_demo(void)
+esp_err_t epd_ssd1677_show_partial_demo(void)
 {
     const int16_t margin = 60;
     const int16_t sq_big = 72;
@@ -1113,7 +1113,7 @@ esp_err_t epd_gdeq0426t82_show_partial_demo(void)
     const int frames = 50;
 
     ESP_LOGI(TAG, "partial demo: white baseline");
-    ESP_RETURN_ON_ERROR(epd_gdeq0426t82_clear(0xFF), TAG, "baseline white failed");
+    ESP_RETURN_ON_ERROR(epd_ssd1677_clear(0xFF), TAG, "baseline white failed");
 
     ESP_LOGI(TAG, "partial demo: draw title band");
     epd_partial_draw_fill(margin, band_y, (int16_t)(EPD_NATIVE_WIDTH - 2 * margin), band_h, 0x00);
@@ -1196,7 +1196,7 @@ esp_err_t epd_gdeq0426t82_show_partial_demo(void)
     return ESP_OK;
 }
 
-esp_err_t epd_gdeq0426t82_power_off(void)
+esp_err_t epd_ssd1677_power_off(void)
 {
     epd_power_off_internal();
     return ESP_OK;

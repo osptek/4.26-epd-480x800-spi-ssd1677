@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-#include "epd_gdeq0426t82.h"
+#include "epd_ssd1677.h"
 #include "epd_text.h"
 #include "font32x32_bold.h"
 
@@ -407,12 +407,12 @@ static esp_err_t epd_text_show_partial_font(const char *text, int16_t x, int16_t
     memset(native_bitmap, 0xFF, native_bytes);
     epd_bw_rotate_r3(logical_bitmap, rw, rh, native_bitmap, nw, nh);
 
-    esp_err_t err = epd_gdeq0426t82_write_image_bw(native_bitmap, nx, ny, nw, nh);
+    esp_err_t err = epd_ssd1677_write_image_bw(native_bitmap, nx, ny, nw, nh);
     if (err == ESP_OK) {
-        err = epd_gdeq0426t82_refresh_area(nx, ny, nw, nh);
+        err = epd_ssd1677_refresh_area(nx, ny, nw, nh);
     }
     if (err == ESP_OK) {
-        err = epd_gdeq0426t82_write_image_bw_again(native_bitmap, nx, ny, nw, nh);
+        err = epd_ssd1677_write_image_bw_again(native_bitmap, nx, ny, nw, nh);
     }
 
     free(native_bitmap);
@@ -485,12 +485,12 @@ static esp_err_t epd_text_show_char_partial_font(char c, int16_t x, int16_t y, u
     memset(native_bitmap, 0xFF, native_bytes);
     epd_bw_rotate_r3(logical_bitmap, rw, rh, native_bitmap, nw, nh);
 
-    esp_err_t err = epd_gdeq0426t82_write_image_bw(native_bitmap, nx, ny, nw, nh);
+    esp_err_t err = epd_ssd1677_write_image_bw(native_bitmap, nx, ny, nw, nh);
     if (err == ESP_OK) {
-        err = epd_gdeq0426t82_refresh_area(nx, ny, nw, nh);
+        err = epd_ssd1677_refresh_area(nx, ny, nw, nh);
     }
     if (err == ESP_OK) {
-        err = epd_gdeq0426t82_write_image_bw_again(native_bitmap, nx, ny, nw, nh);
+        err = epd_ssd1677_write_image_bw_again(native_bitmap, nx, ny, nw, nh);
     }
 
     free(native_bitmap);
@@ -512,12 +512,12 @@ esp_err_t epd_text_clear_partial(int16_t x, int16_t y, int16_t w, int16_t h)
     int16_t nx, ny, nw, nh;
     epd_logical_rect_to_native(x, y, w, h, &nx, &ny, &nw, &nh);
 
-    esp_err_t err = epd_gdeq0426t82_write_bw_fill(nx, ny, nw, nh, 0xFF);
+    esp_err_t err = epd_ssd1677_write_bw_fill(nx, ny, nw, nh, 0xFF);
     if (err == ESP_OK) {
-        err = epd_gdeq0426t82_refresh_area(nx, ny, nw, nh);
+        err = epd_ssd1677_refresh_area(nx, ny, nw, nh);
     }
     if (err == ESP_OK) {
-        err = epd_gdeq0426t82_write_bw_fill_again(nx, ny, nw, nh, 0xFF);
+        err = epd_ssd1677_write_bw_fill_again(nx, ny, nw, nh, 0xFF);
     }
     return err;
 }
