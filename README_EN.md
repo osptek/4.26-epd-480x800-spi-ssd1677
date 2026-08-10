@@ -46,8 +46,6 @@ Repo id: `4.26-epd-480x800-spi-ssd1677`
 
 <p align="center"><img alt="EPD0426A02" src="./images/EPD0426A02.png" width="320" /></p>
 
-**Notes:** Module.
-
 ---
 
 ## How to Switch Branches

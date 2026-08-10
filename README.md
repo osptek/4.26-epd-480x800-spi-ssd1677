@@ -46,8 +46,6 @@
 
 <p align="center"><img alt="EPD0426A02" src="./images/EPD0426A02.png" width="320" /></p>
 
-**说明：** 模组。
-
 ---
 
 ## 如何切换分支
