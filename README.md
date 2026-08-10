@@ -2,7 +2,7 @@
 
 <h1 align="center">OSPTEK 4.26″ EPD 480×800（SSD1677 · SPI）</h1>
 
-<p align="center"><b>电子纸 · SPI · SSD1677</b></p>
+<p align="center"><b>电子纸模组 · SPI · SSD1677 · 多版本索引</b></p>
 
 <p align="center"><a href="./README_EN.md">English</a> | 简体中文</p>
 
@@ -13,80 +13,58 @@
   <img alt="Driver: SSD1677" src="https://img.shields.io/badge/Driver-SSD1677-E7352C?style=flat-square" />
 </p>
 
-<p align="center"><img alt="OSPTEK 4.26 寸 480×800 电子纸 SPI 模组（SSD1677）宣传图" src="./images/product.png" width="640" /></p>
-
 ## 目录
 
-- [产品简介](#产品简介)
-- [规格参数](#规格参数)
-- [示例工程](#示例工程)
-- [仓库结构](#仓库结构)
-- [相关资料](#相关资料)
+- [说明](#说明)
+- [版本一览](#版本一览)
+- [EPD0426A02](#epd0426a02)
+- [如何切换分支](#如何切换分支)
 - [购买链接](#购买链接)
 - [技术支持](#技术支持)
 
 ---
 
-## 产品简介
+## 说明
 
-OSPTEK **4.26 寸 480×800 电子纸（EPD）** 是一款 **SPI** 接口黑白墨水屏模组，显示驱动为 **SSD1677**。适合低功耗标签、仪表与静态信息显示；示例演示黑白 / 4 灰阶图像与局部刷新。
+本仓库收录 **4.26 寸 480×800 EPD（SPI · SSD1677）** 显示模组资料。
+
+**`main` 为导航页**（仓库默认分支）。下表可快速浏览各版本；点击「说明」跳转到本页下方的详细介绍。需要某一版本的完整内容时，请切换到对应**版本分支**（方法见下文）。
 
 规格标识（仓库名）：`4.26-epd-480x800-spi-ssd1677`
 
-当前模组版本：**EPD0426A02**。电气与外形细节以 [`docs/EPD_0426_A02_f14fa2c9ce.pdf`](./docs/EPD_0426_A02_f14fa2c9ce.pdf) 为准。
+---
 
-## 规格参数
+## 版本一览
 
-| 项目 | 规格 |
-| ---- | ---- |
-| 尺寸 | 4.26 英寸 |
-| 类型 | 电子纸 / EPD（黑白） |
-| 分辨率 | 480×800 |
-| 接口 | SPI |
-| 驱动 IC | SSD1677 |
+| 版本 | 宣传图 | 说明 |
+| ---- | ------ | ---- |
+| EPD0426A02 | <img alt="EPD0426A02" src="./images/EPD0426A02.png" width="120" /> | [查看详情](#epd0426a02) |
 
-> 完整外形尺寸、FPC 定义、供电与时序以产品规格书 / 驱动手册为准。
+---
 
-## 示例工程
+## EPD0426A02
 
-| 说明 | 路径 |
-| ---- | ---- |
-| ESP32-S3 · SSD1677 SPI bring-up（黑白 / 4 灰阶 / 局部刷新） | [`examples/esp32s3-4.26-epd-480x800-spi-ssd1677-bringup/`](./examples/esp32s3-4.26-epd-480x800-spi-ssd1677-bringup/) |
+<p align="center"><img alt="EPD0426A02" src="./images/EPD0426A02.png" width="320" /></p>
 
-## 仓库结构
+**说明：** 模组。
 
-```text
-4.26-epd-480x800-spi-ssd1677/
-├── README.md
-├── README_EN.md
-├── MODULE_VERSION.md
-├── LICENSE
-├── images/          # README 用图
-├── docs/            # 规格书、驱动手册、转接板、波表等
-└── examples/        # 示例工程
-```
+---
 
-## 相关资料
+## 如何切换分支
 
-### 本产品资料
+完整产品资料在各**版本分支**中；`main` 仅作导航。
 
-| 资料 | 链接 |
-| ---- | ---- |
-| 产品规格书（EPD0426A02） | [`docs/EPD_0426_A02_f14fa2c9ce.pdf`](./docs/EPD_0426_A02_f14fa2c9ce.pdf) |
-| 驱动 IC 数据手册（SSD1677） | [`docs/SSD_1677_447731c055.pdf`](./docs/SSD_1677_447731c055.pdf) |
-| 4.26″ 墨水屏转接板 | [`docs/4.26寸墨水屏转接板.pdf`](./docs/4.26%E5%AF%B8%E5%A2%A8%E6%B0%B4%E5%B1%8F%E8%BD%AC%E6%8E%A5%E6%9D%BF.pdf) |
-| 4 灰阶波表 | [`docs/4灰波表.txt`](./docs/4%E7%81%B0%E6%B3%A2%E8%A1%A8.txt) |
+- **网页：** 在仓库页左上角打开分支下拉框，选择与料号对应的版本分支即可。
+- **命令行：** 克隆本仓库后执行 `git checkout <版本分支名>`；若本地已有仓库，先 `git fetch` 再切换。
 
-### 示例工程
-
-- [ESP32-S3 SSD1677 SPI bring-up](./examples/esp32s3-4.26-epd-480x800-spi-ssd1677-bringup/)
+---
 
 ## 购买链接
 
 <p align="center">
   <a href="https://shop110742373.taobao.com/"><img alt="淘宝官方店铺" src="https://img.shields.io/badge/淘宝-官方店铺-FF6A00?style=for-the-badge" /></a>
   &nbsp;&nbsp;
-  <a href="https://www.aliexpress.com/store/1105701619"><img alt="速卖通官方店铺" src="https://img.shields.io/badge/速卖通-官方店铺-FF6A00?style=for-the-badge" /></a>
+  <a href="https://www.aliexpress.com/store/1105701619"><img alt="速卖通官方店铺" src="https://img.shields.io/badge/速卖通-官方店铺-E62E04?style=for-the-badge&logo=aliexpress&logoColor=white" /></a>
 </p>
 
 **国内（淘宝）**
@@ -96,6 +74,8 @@ OSPTEK **4.26 寸 480×800 电子纸（EPD）** 是一款 **SPI** 接口黑白�
 **海外（AliExpress）**
 
 - 店铺：[OSPTEK Official Store](https://www.aliexpress.com/store/1105701619)
+
+---
 
 ## 技术支持
 
