@@ -18,7 +18,6 @@
 - [About](#about)
 - [Versions](#versions)
 - [EPD0426A02](#epd0426a02)
-- [How to Switch Branches](#how-to-switch-branches)
 - [Where to Buy](#where-to-buy)
 - [Support](#support)
 
@@ -28,7 +27,7 @@
 
 This repository holds materials for the **4.26″ 480×800 EPD (SPI · SSD1677)** module family.
 
-**`main` is the navigation page** (repository default). Use the table below for a quick scan; click **Details** to jump to the section on this page. For a given version’s full content, switch to that **version branch** (see below).
+The **root README is the navigation page**. Use the table below for a quick scan; open **Full docs** to enter that **part-number folder** under `versions/` (product page, datasheets, and examples live there).
 
 Repo id: `4.26-epd-480x800-spi-ssd1677`
 
@@ -36,24 +35,17 @@ Repo id: `4.26-epd-480x800-spi-ssd1677`
 
 ## Versions
 
-| Version | Image | Notes |
-| ------- | ----- | ----- |
-| EPD0426A02 | <img alt="EPD0426A02" src="./images/EPD0426A02.png" width="120" /> | [Details](#epd0426a02) |
+| Version | Image | Summary | Full docs |
+| ------- | ----- | ------- | --------- |
+| EPD0426A02 | <img alt="EPD0426A02" src="./versions/EPD0426A02/images/product.png" width="120" /> | [Summary](#epd0426a02) | [Full docs](./versions/EPD0426A02/) |
 
 ---
 
 ## EPD0426A02
 
-<p align="center"><img alt="EPD0426A02" src="./images/EPD0426A02.png" width="320" /></p>
+<p align="center"><img alt="EPD0426A02" src="./versions/EPD0426A02/images/product.png" width="320" /></p>
 
----
-
-## How to Switch Branches
-
-Full product materials are on each **version branch**; `main` is navigation only.
-
-- **Web:** open the branch dropdown at the top left of the repository page and select the branch that matches your part number.
-- **CLI:** after cloning, run `git checkout <version-branch>`; if the repo is already local, `git fetch` first, then switch.
+Full product page, datasheets, and examples: [versions/EPD0426A02/](./versions/EPD0426A02/)
 
 ---
 
